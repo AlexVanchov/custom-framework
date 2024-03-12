@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Middleware;
+namespace App\Middleware;
 
 use Core\Middleware\MiddlewareInterface;
 
@@ -32,7 +32,7 @@ class AuthMiddleware implements MiddlewareInterface
 	 *
 	 * @return bool True if the user is authenticated, false otherwise.
 	 */
-	protected function isAuthenticated()
+	protected function isAuthenticated(): bool
 	{
 		// TODO Implement authentication check and remove me from here
 		return isset($_SESSION['user']);

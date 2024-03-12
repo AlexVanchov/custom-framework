@@ -2,37 +2,56 @@
 
 namespace Core;
 
+use Core\Http\HttpStatus;
+use Core\Http\Response;
+
+/**
+ * The Router class is responsible for routing requests to the appropriate controller action.
+ */
 class Router
 {
-	protected $routes = [];
-	protected $container;
+	protected array $routes = [];
+	protected Container $container;
 
+	/**
+	 * @param Container $container
+	 */
 	public function __construct(Container $container)
 	{
 		$this->container = $container;
 		$this->loadRoutes();
 	}
 
-	public function loadRoutes()
+	/**
+	 * @return void
+	 */
+	public function loadRoutes(): void
 	{
-		//TODO  Load routes from the config file
-		$routes = require '../config/routes.php';
+		$routes = Application::$app->config->get('routes');
 		foreach ($routes as $route) {
 			[$method, $path, $action] = $route;
 			$this->add($method, $path, $action);
 		}
 	}
 
+	/**
+	 * @param $method
+	 * @param $path
+	 * @param $action
+	 * @return void
+	 */
 	public function add($method, $path, $action)
 	{
 		$this->routes[] = ['method' => $method, 'path' => $path, 'action' => $action];
 	}
 
+	/**
+	 * @return void
+	 */
 	public function dispatch(): void
 	{
 		$url = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 		$method = $_SERVER['REQUEST_METHOD'];
-
 
 		foreach ($this->routes as $route) {
 			if ($route['path'] === $url && $route['method'] === $method) {
@@ -40,16 +59,20 @@ class Router
 				$class = "App\\Controllers\\$class";
 				$controller = $this->container->make($class);
 				$controller->$action();
-
-				// TODO or use this
-//				call_user_func([$controller, $action]);
 				return;
 			}
 		}
 
-		// Handle not found
-		// TODO implement status helper
-		header("HTTP/1.0 404 Not Found");
-		echo '404 Not Found';
+		$this->handleNotFound();
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function handleNotFound(): void
+	{
+		$response = new Response();
+		$response->setStatusCode(HttpStatus::NOT_FOUND);
+		$response->send();
 	}
 }

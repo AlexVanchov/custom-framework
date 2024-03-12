@@ -1,7 +1,7 @@
 <?php
 
 namespace Core\Security;
-// TODO IMPLEMENT ME
+
 class CSRF
 {
 	/**

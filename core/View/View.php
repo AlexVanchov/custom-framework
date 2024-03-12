@@ -6,7 +6,7 @@ class View
 	protected $path;
 	protected $variables = [];
 
-	public function __construct($path = "../app/views")
+	public function __construct($path = "../app/Views")
 	{
 		$this->path = $path;
 	}
@@ -35,7 +35,6 @@ class View
 	}
 
 	/**
-	 * TODO IMPLEMENT ME ALSO
 	 * Escape HTML special characters
 	 *
 	 * @param string $string

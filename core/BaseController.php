@@ -6,6 +6,9 @@ use Core\Http\Request;
 use Core\View\View;
 use JetBrains\PhpStorm\NoReturn;
 
+/**
+ * Base controller
+ */
 class BaseController
 {
 	protected View $view;
@@ -25,18 +28,29 @@ class BaseController
 		echo $this->view->render($template, $variables);
 	}
 
-	protected function model($model)
+	/**
+	 * @param $model
+	 * @return mixed
+	 */
+	protected function model($model): mixed
 	{
 		$model = "App\\Models\\$model";
 		return new $model();
 	}
 
+	/**
+	 * @param $view
+	 * @param array $data
+	 */
 	protected function view($view, $data = []): void
 	{
 		extract($data);
 		require_once "../app/views/$view.php";
 	}
 
+	/**
+	 * @param $data
+	 */
 	protected function json($data): void
 	{
 		header('Content-Type: application/json');
@@ -49,7 +63,7 @@ class BaseController
 	 */
 	protected function validateCsrfToken(): void
 	{
-		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if ($this->request->getMethod() === 'POST') {
 			$submittedToken = $_POST['csrf_token'] ?? '';
 			if (!\Core\Security\CSRF::validateToken($submittedToken)) {
 				// Handle the invalid CSRF token case
@@ -68,37 +82,6 @@ class BaseController
 	{
 		header('Location: ' . $url);
 		exit;
-	}
-
-	/**
-	 * Set a flash message.
-	 *
-	 * @param string $key The key for the message.
-	 * @param string $message The message content.
-	 */
-	protected function setFlash(string $key, string $message): void
-	{
-		// todo move me as separate + bellow
-		if (!isset($_SESSION['flash_messages'])) {
-			$_SESSION['flash_messages'] = [];
-		}
-		$_SESSION['flash_messages'][$key] = $message;
-	}
-
-	/**
-	 * Get and clear a flash message.
-	 *
-	 * @param string $key The key for the message.
-	 * @return string|null The message content or null if not set.
-	 */
-	protected function getFlash(string $key): ?string
-	{
-		if (isset($_SESSION['flash_messages'][$key])) {
-			$message = $_SESSION['flash_messages'][$key];
-			unset($_SESSION['flash_messages'][$key]);
-			return $message;
-		}
-		return null;
 	}
 }
 

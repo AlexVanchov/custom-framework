@@ -10,11 +10,9 @@ class Connection
 {
 	protected static $instance = null;
 
-	public static function getInstance()
+	public static function getInstance($db_config)
 	{
 		if (self::$instance === null) {
-
-			$db_config = Application::$app->config->get('db');
 			try {
 				self::$instance = new PDO(
 					$db_config['dsn'],

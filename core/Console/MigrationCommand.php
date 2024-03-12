@@ -2,6 +2,7 @@
 
 namespace Core\Console;
 
+use Core\Application;
 use Core\Database\Connection;
 
 class MigrationCommand
@@ -11,7 +12,8 @@ class MigrationCommand
 
 	public function __construct()
 	{
-		$this->db = Connection::getInstance();
+		// TODO FIx me
+		$this->db = Application::$app->container->make('database');
 		$this->ensureMigrationsTable();
 	}
 

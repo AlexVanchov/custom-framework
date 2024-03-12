@@ -1,11 +1,9 @@
 <?php
 $config = [
 	'bindings' => [
-		// TODO implement bindings
-//		'logger' => 'Monolog\Logger',
-//		'container' => 'Core\Container',
 //		'router' => 'Core\Router',
-//		'db' => 'Core\Database\Connection',
+//		'request' => 'Core\Http\Request',
+		'db' => 'Core\Database\Connection',
 	],
 ];
 

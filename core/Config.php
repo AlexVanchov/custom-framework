@@ -2,6 +2,9 @@
 
 namespace Core;
 
+/**
+ * The Config class is a simple key-value store for configuration parameters.
+ */
 class Config
 {
 	protected array $parameters;
@@ -11,6 +14,10 @@ class Config
 		$this->parameters = $parameters;
 	}
 
+	/**
+	 * @param $configPath
+	 * @return void
+	 */
 	public function load($configPath): void
 	{
 		if (file_exists($configPath)) {
@@ -21,12 +28,21 @@ class Config
 		}
 	}
 
+	/**
+	 * @param $key
+	 * @param $default
+	 * @return mixed|null
+	 */
 	public function get($key, $default = null)
 	{
 		return $this->parameters[$key] ?? $default;
 	}
 
-	// Optionally, add a method to set parameters dynamically
+	/**
+	 * @param $key
+	 * @param $value
+	 * @return void
+	 */
 	public function set($key, $value): void
 	{
 		$this->parameters[$key] = $value;

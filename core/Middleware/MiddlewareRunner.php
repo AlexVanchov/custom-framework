@@ -2,6 +2,8 @@
 
 namespace Core\Middleware;
 
+use Core\Http\Request;
+
 class MiddlewareRunner
 {
 	protected array $middleware = [];
@@ -17,14 +19,13 @@ class MiddlewareRunner
 	}
 
 	/**
-	 * TODO here
 	 * Run the middleware stack.
 	 *
-	 * @param mixed $request The request object.
+	 * @param Request $request The request object.
 	 * @param callable $finalHandler
 	 * @return mixed
 	 */
-	public function run(mixed $request, callable $finalHandler): mixed
+	public function run(Request $request, callable $finalHandler): mixed
 	{
 		$stack = array_reduce(array_reverse($this->middleware), function ($next, $middleware) {
 			return function ($request) use ($middleware, $next) {

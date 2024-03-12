@@ -1,12 +1,12 @@
 <?php
-
-error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED & ~E_USER_DEPRECATED);
-ini_set('display_startup_errors', '1');
-ini_set('display_errors', '1');
+require_once '../config/constants.php';
+if (APP_ENV === 'dev') {
+	error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+	ini_set('display_startup_errors', '1');
+	ini_set('display_errors', '1');
+}
 
 require_once '../vendor/autoload.php';
-
-use Core\Middleware\AuthMiddleware;
 use Core\Application;
 use Core\Config;
 

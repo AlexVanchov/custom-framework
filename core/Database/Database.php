@@ -2,14 +2,38 @@
 
 namespace Core\Database;
 
-class Database
-{
-	protected ?\PDO $pdo;
+use PDO;
+use PDOException;
 
-	public function __construct()
+class Database implements DatabaseInterface
+{
+	protected ?PDO $pdo;
+
+	public function __construct($config)
 	{
-		$this->pdo = Connection::getInstance();
+		$this->connect($config);
 	}
+
+	public function connect($db_config): void
+	{
+		if ($this->pdo === null) {
+			try {
+				$this->pdo = new PDO(
+					$db_config['dsn'],
+					$db_config['user'],
+					$db_config['password'],
+					[
+						PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+						PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+					]
+				);
+			} catch (PDOException $e) {
+				// Handle error appropriately
+				die("Database Connection Failed: " . $e->getMessage());
+			}
+		}
+	}
+
 
 	public function query($sql, $params = [])
 	{

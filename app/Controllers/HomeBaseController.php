@@ -2,13 +2,13 @@
 
 namespace App\Controllers;
 
+use Core\Application;
 use Core\BaseController;
 
 class HomeBaseController extends BaseController
 {
 	public function index()
 	{
-
 		$this->render('home/index', [
 			'title' => 'Welcome',
 			'heading' => 'Welcome H',
