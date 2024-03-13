@@ -10,6 +10,7 @@ composer.phar
 
 # Log files #
 *.log
+*.cache
 
 # Cache directories #
 cache/

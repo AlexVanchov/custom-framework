@@ -14,5 +14,9 @@
     ],
     "require": {
         "monolog/monolog": "^3.5"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.0",
+        "friendsofphp/php-cs-fixer": "*"
     }
 }

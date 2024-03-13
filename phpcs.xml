@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ruleset name="CustomProjectStandard">
+    <!-- The name of your project's coding standards -->
+
+    <description>Custom coding standards for my PHP project.</description>
+
+    <!-- Path to scan (relative to this file) -->
+    <file>./app</file>
+
+    <!-- Exclude patterns -->
+    <exclude-pattern>vendor/</exclude-pattern>
+
+    <!-- Include the PSR-12 standard -->
+    <rule ref="PSR12"/>
+
+    <!-- Custom modifications or additional rules -->
+    <!-- Example: Disallow use of else expression -->
+    <rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace">
+        <severity>0</severity>
+    </rule>
+
+    <!-- Example: Increase line length limit -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="160"/>
+        </properties>
+    </rule>
+</ruleset>

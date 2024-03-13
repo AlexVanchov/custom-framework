@@ -6,6 +6,5 @@ use Core\Database\BaseModel;
 
 class UserModel extends BaseModel
 {
-
-	protected static $table = 'users';
+    protected static $table = 'users';
 }
